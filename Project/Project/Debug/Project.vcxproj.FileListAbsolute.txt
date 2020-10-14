@@ -1,0 +1,4 @@
+C:\YaiMP\чм_прог\Project\Project\Debug\Project.vcxprojAssemblyReference.cache
+C:\YaiMP\чм_прог\Project\Project\Debug\Project.MyForm.resources
+C:\YaiMP\чм_прог\Project\Project\Debug\Project.vcxproj.GenerateResource.cache
+C:\YaiMP\чм_прог\Project\Project\Debug\Project.vcxproj.CopyComplete
