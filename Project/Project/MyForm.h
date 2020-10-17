@@ -57,6 +57,8 @@ namespace Project {
   private: System::Windows::Forms::TextBox^ textBox4;
   private: System::Windows::Forms::Label^ label4;
   private: System::Windows::Forms::DataGridViewTextBoxColumn^ h;
+  private: System::Windows::Forms::TextBox^ textBox5;
+  private: System::Windows::Forms::Label^ label5;
   protected:
 
   private: System::ComponentModel::IContainer^ components;
@@ -84,13 +86,15 @@ namespace Project {
       this->u = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
       this->z = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
       this->local_error = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+      this->h = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
       this->label2 = (gcnew System::Windows::Forms::Label());
       this->textBox2 = (gcnew System::Windows::Forms::TextBox());
       this->textBox3 = (gcnew System::Windows::Forms::TextBox());
       this->label3 = (gcnew System::Windows::Forms::Label());
       this->textBox4 = (gcnew System::Windows::Forms::TextBox());
       this->label4 = (gcnew System::Windows::Forms::Label());
-      this->h = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+      this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+      this->label5 = (gcnew System::Windows::Forms::Label());
       (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
       this->SuspendLayout();
       // 
@@ -107,6 +111,7 @@ namespace Project {
       this->zedGraphControl1->ScrollMinY2 = 0;
       this->zedGraphControl1->Size = System::Drawing::Size(470, 366);
       this->zedGraphControl1->TabIndex = 0;
+      this->zedGraphControl1->Load += gcnew System::EventHandler(this, &MyForm::zedGraphControl1_Load);
       // 
       // textBox1
       // 
@@ -127,7 +132,7 @@ namespace Project {
       // 
       // button1
       // 
-      this->button1->Location = System::Drawing::Point(15, 431);
+      this->button1->Location = System::Drawing::Point(12, 430);
       this->button1->Name = L"button1";
       this->button1->Size = System::Drawing::Size(75, 23);
       this->button1->TabIndex = 3;
@@ -166,6 +171,11 @@ namespace Project {
       // 
       this->local_error->HeaderText = L"local error";
       this->local_error->Name = L"local_error";
+      // 
+      // h
+      // 
+      this->h->HeaderText = L"h";
+      this->h->Name = L"h";
       // 
       // label2
       // 
@@ -216,16 +226,29 @@ namespace Project {
       this->label4->TabIndex = 10;
       this->label4->Text = L"eps";
       // 
-      // h
+      // textBox5
       // 
-      this->h->HeaderText = L"h";
-      this->h->Name = L"h";
+      this->textBox5->Location = System::Drawing::Point(381, 432);
+      this->textBox5->Name = L"textBox5";
+      this->textBox5->Size = System::Drawing::Size(100, 20);
+      this->textBox5->TabIndex = 11;
+      // 
+      // label5
+      // 
+      this->label5->AutoSize = true;
+      this->label5->Location = System::Drawing::Point(343, 439);
+      this->label5->Name = L"label5";
+      this->label5->Size = System::Drawing::Size(13, 13);
+      this->label5->TabIndex = 12;
+      this->label5->Text = L"L";
       // 
       // MyForm
       // 
       this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
       this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-      this->ClientSize = System::Drawing::Size(1311, 466);
+      this->ClientSize = System::Drawing::Size(1102, 466);
+      this->Controls->Add(this->label5);
+      this->Controls->Add(this->textBox5);
       this->Controls->Add(this->label4);
       this->Controls->Add(this->textBox4);
       this->Controls->Add(this->label3);
@@ -246,43 +269,41 @@ namespace Project {
     }
 #pragma endregion
   private:
-    double f1(double x) {
-      return sin(x);
-    }
-    double f_1( double un)
+    
+    double f_1( double un, double L)
     {
-      double g = 9.8, L = 0.1; // заменить на текстбокс
+      double g = 9.8; // заменить на текстбокс
       return -(g / L) * sin(un); //z'
      
     }
-    vector<double> rungeKutta(double u0, double z0, double h)
+    vector<double> rungeKutta(double u0, double z0, double h, double L)
     {
       double coeff [4][2]; // 0 for q/z, 1 for k/u
       vector<double> res(2);
-      coeff[0][0] = f_1(u0); // q0
+      coeff[0][0] = f_1(u0, L); // q0
       coeff[0][1] = z0; //k0
-      coeff[1][0] = f_1(u0+z0*h/2);//q1
+      coeff[1][0] = f_1(u0+z0*h/2, L);//q1
       coeff[1][1] = z0+coeff[0][0]*h/2;//k1
-      coeff[2][0] = f_1(u0 + coeff[1][1] * h / 2);//q2
+      coeff[2][0] = f_1(u0 + coeff[1][1] * h / 2, L);//q2
       coeff[2][1] = z0 + coeff[1][0] * h / 2; // k2
-      coeff[3][0] = f_1(u0 + coeff[2][1] * h);//q3
+      coeff[3][0] = f_1(u0 + coeff[2][1] * h, L);//q3
       coeff[3][1] = z0 + coeff[2][1] * h;//k3
       res[0]= z0 + h / 6 * (coeff[0][0] + 2 * coeff[1][0] + 2 * coeff[2][0] + coeff[3][0]);
       res[1]= u0 + h / 6 * (coeff[0][1] + 2 * coeff[1][1] + 2 * coeff[2][1] + coeff[3][1]);
       return res;
     }
-    double errorControl(double &u0, double &z0, double h, double eps, double &locErr)
+    double errorControl(double& u0, double& z0, double h, double eps, double& locErr, double L)
     {
       double z, u, z_, u_, S1, S2, S;
       vector<double> rk1, rk2;
-      rk1 = rungeKutta(u0, z0, h);
+      rk1 = rungeKutta(u0, z0, h, L);
       z = rk1[0];
       u = rk1[1];
       z_ = z0;
       u_ = u0;
       for (int i = 0; i < 2; i++)
       {
-        rk2 = rungeKutta(u_, z_, h / 2);
+        rk2 = rungeKutta(u_, z_, h / 2, L);
         z_ = rk2[0];
         u_ = rk2[1];
       }
@@ -330,6 +351,7 @@ namespace Project {
     double h = Convert::ToDouble(textBox1->Text);
    // double h = 0.1;
     double eps = Convert::ToDouble(textBox4->Text);
+    double coefL = Convert::ToDouble(textBox5->Text);
     double xmin_limit = xmin - 0.1;
     double xmax_limit = xmax + 0.1;
     /*
@@ -346,7 +368,7 @@ namespace Project {
     for (double x = xmin; x <= xmax; )
     {
       // Рунге-Кутта
-      hControl = errorControl(u0, z0, h, eps, errorLoc);
+      hControl = errorControl(u0, z0, h, eps, errorLoc, coefL);
      
       if (h <= hControl)
       {//Добавление на график
@@ -383,5 +405,7 @@ namespace Project {
   }
   private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
   }
+private: System::Void zedGraphControl1_Load(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
