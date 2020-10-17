@@ -59,6 +59,13 @@ namespace Project {
   private: System::Windows::Forms::DataGridViewTextBoxColumn^ h;
   private: System::Windows::Forms::TextBox^ textBox5;
   private: System::Windows::Forms::Label^ label5;
+  private: System::Windows::Forms::PictureBox^ pictureBox1;
+  private: System::Windows::Forms::PictureBox^ pictureBox2;
+  private: System::Windows::Forms::PictureBox^ pictureBox3;
+  private: System::Windows::Forms::Label^ label6;
+  private: System::Windows::Forms::TextBox^ textBox6;
+  private: System::Windows::Forms::Label^ label7;
+  private: System::Windows::Forms::TextBox^ textBox7;
   protected:
 
   private: System::ComponentModel::IContainer^ components;
@@ -77,6 +84,7 @@ namespace Project {
     void InitializeComponent(void)
     {
       this->components = (gcnew System::ComponentModel::Container());
+      System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
       this->zedGraphControl1 = (gcnew ZedGraph::ZedGraphControl());
       this->textBox1 = (gcnew System::Windows::Forms::TextBox());
       this->label1 = (gcnew System::Windows::Forms::Label());
@@ -95,7 +103,17 @@ namespace Project {
       this->label4 = (gcnew System::Windows::Forms::Label());
       this->textBox5 = (gcnew System::Windows::Forms::TextBox());
       this->label5 = (gcnew System::Windows::Forms::Label());
+      this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+      this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+      this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+      this->label6 = (gcnew System::Windows::Forms::Label());
+      this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+      this->label7 = (gcnew System::Windows::Forms::Label());
+      this->textBox7 = (gcnew System::Windows::Forms::TextBox());
       (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
       this->SuspendLayout();
       // 
       // zedGraphControl1
@@ -115,10 +133,11 @@ namespace Project {
       // 
       // textBox1
       // 
-      this->textBox1->Location = System::Drawing::Point(64, 398);
+      this->textBox1->Location = System::Drawing::Point(45, 398);
       this->textBox1->Name = L"textBox1";
-      this->textBox1->Size = System::Drawing::Size(100, 20);
+      this->textBox1->Size = System::Drawing::Size(58, 20);
       this->textBox1->TabIndex = 1;
+      this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox1_TextChanged);
       // 
       // label1
       // 
@@ -134,7 +153,7 @@ namespace Project {
       // 
       this->button1->Location = System::Drawing::Point(12, 430);
       this->button1->Name = L"button1";
-      this->button1->Size = System::Drawing::Size(75, 23);
+      this->button1->Size = System::Drawing::Size(91, 23);
       this->button1->TabIndex = 3;
       this->button1->Text = L"Старт";
       this->button1->UseVisualStyleBackColor = true;
@@ -149,7 +168,7 @@ namespace Project {
       });
       this->dataGridView1->Location = System::Drawing::Point(497, 12);
       this->dataGridView1->Name = L"dataGridView1";
-      this->dataGridView1->Size = System::Drawing::Size(802, 366);
+      this->dataGridView1->Size = System::Drawing::Size(345, 442);
       this->dataGridView1->TabIndex = 4;
       // 
       // x
@@ -180,31 +199,32 @@ namespace Project {
       // label2
       // 
       this->label2->AutoSize = true;
-      this->label2->Location = System::Drawing::Point(189, 404);
+      this->label2->Location = System::Drawing::Point(123, 405);
       this->label2->Name = L"label2";
       this->label2->Size = System::Drawing::Size(19, 13);
       this->label2->TabIndex = 5;
       this->label2->Text = L"u0";
+      this->label2->Click += gcnew System::EventHandler(this, &MyForm::label2_Click);
       // 
       // textBox2
       // 
-      this->textBox2->Location = System::Drawing::Point(225, 398);
+      this->textBox2->Location = System::Drawing::Point(148, 398);
       this->textBox2->Name = L"textBox2";
-      this->textBox2->Size = System::Drawing::Size(100, 20);
+      this->textBox2->Size = System::Drawing::Size(62, 20);
       this->textBox2->TabIndex = 6;
       this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
       // 
       // textBox3
       // 
-      this->textBox3->Location = System::Drawing::Point(225, 433);
+      this->textBox3->Location = System::Drawing::Point(148, 433);
       this->textBox3->Name = L"textBox3";
-      this->textBox3->Size = System::Drawing::Size(100, 20);
+      this->textBox3->Size = System::Drawing::Size(62, 20);
       this->textBox3->TabIndex = 7;
       // 
       // label3
       // 
       this->label3->AutoSize = true;
-      this->label3->Location = System::Drawing::Point(189, 440);
+      this->label3->Location = System::Drawing::Point(121, 441);
       this->label3->Name = L"label3";
       this->label3->Size = System::Drawing::Size(21, 13);
       this->label3->TabIndex = 8;
@@ -212,15 +232,15 @@ namespace Project {
       // 
       // textBox4
       // 
-      this->textBox4->Location = System::Drawing::Point(381, 398);
+      this->textBox4->Location = System::Drawing::Point(256, 398);
       this->textBox4->Name = L"textBox4";
-      this->textBox4->Size = System::Drawing::Size(100, 20);
+      this->textBox4->Size = System::Drawing::Size(66, 20);
       this->textBox4->TabIndex = 9;
       // 
       // label4
       // 
       this->label4->AutoSize = true;
-      this->label4->Location = System::Drawing::Point(340, 405);
+      this->label4->Location = System::Drawing::Point(233, 405);
       this->label4->Name = L"label4";
       this->label4->Size = System::Drawing::Size(24, 13);
       this->label4->TabIndex = 10;
@@ -228,25 +248,91 @@ namespace Project {
       // 
       // textBox5
       // 
-      this->textBox5->Location = System::Drawing::Point(381, 432);
+      this->textBox5->Location = System::Drawing::Point(256, 432);
       this->textBox5->Name = L"textBox5";
-      this->textBox5->Size = System::Drawing::Size(100, 20);
+      this->textBox5->Size = System::Drawing::Size(66, 20);
       this->textBox5->TabIndex = 11;
+      this->textBox5->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox5_TextChanged);
       // 
       // label5
       // 
       this->label5->AutoSize = true;
-      this->label5->Location = System::Drawing::Point(343, 439);
+      this->label5->Location = System::Drawing::Point(233, 440);
       this->label5->Name = L"label5";
       this->label5->Size = System::Drawing::Size(13, 13);
       this->label5->TabIndex = 12;
       this->label5->Text = L"L";
       // 
+      // pictureBox1
+      // 
+      this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+      this->pictureBox1->Location = System::Drawing::Point(883, 12);
+      this->pictureBox1->Name = L"pictureBox1";
+      this->pictureBox1->Size = System::Drawing::Size(353, 287);
+      this->pictureBox1->TabIndex = 13;
+      this->pictureBox1->TabStop = false;
+      // 
+      // pictureBox2
+      // 
+      this->pictureBox2->Location = System::Drawing::Point(-23, -46);
+      this->pictureBox2->Name = L"pictureBox2";
+      this->pictureBox2->Size = System::Drawing::Size(100, 50);
+      this->pictureBox2->TabIndex = 14;
+      this->pictureBox2->TabStop = false;
+      // 
+      // pictureBox3
+      // 
+      this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
+      this->pictureBox3->Location = System::Drawing::Point(883, 339);
+      this->pictureBox3->Name = L"pictureBox3";
+      this->pictureBox3->Size = System::Drawing::Size(353, 115);
+      this->pictureBox3->TabIndex = 15;
+      this->pictureBox3->TabStop = false;
+      // 
+      // label6
+      // 
+      this->label6->AutoSize = true;
+      this->label6->Location = System::Drawing::Point(339, 405);
+      this->label6->Name = L"label6";
+      this->label6->Size = System::Drawing::Size(28, 13);
+      this->label6->TabIndex = 16;
+      this->label6->Text = L"xmin";
+      // 
+      // textBox6
+      // 
+      this->textBox6->Location = System::Drawing::Point(373, 398);
+      this->textBox6->Name = L"textBox6";
+      this->textBox6->Size = System::Drawing::Size(66, 20);
+      this->textBox6->TabIndex = 17;
+      // 
+      // label7
+      // 
+      this->label7->AutoSize = true;
+      this->label7->Location = System::Drawing::Point(336, 439);
+      this->label7->Name = L"label7";
+      this->label7->Size = System::Drawing::Size(31, 13);
+      this->label7->TabIndex = 18;
+      this->label7->Text = L"xmax";
+      // 
+      // textBox7
+      // 
+      this->textBox7->Location = System::Drawing::Point(373, 432);
+      this->textBox7->Name = L"textBox7";
+      this->textBox7->Size = System::Drawing::Size(66, 20);
+      this->textBox7->TabIndex = 19;
+      // 
       // MyForm
       // 
       this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
       this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-      this->ClientSize = System::Drawing::Size(1102, 466);
+      this->ClientSize = System::Drawing::Size(1256, 466);
+      this->Controls->Add(this->textBox7);
+      this->Controls->Add(this->label7);
+      this->Controls->Add(this->textBox6);
+      this->Controls->Add(this->label6);
+      this->Controls->Add(this->pictureBox3);
+      this->Controls->Add(this->pictureBox2);
+      this->Controls->Add(this->pictureBox1);
       this->Controls->Add(this->label5);
       this->Controls->Add(this->textBox5);
       this->Controls->Add(this->label4);
@@ -263,6 +349,9 @@ namespace Project {
       this->Name = L"MyForm";
       this->Text = L"11 задача";
       (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+      (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
       this->ResumeLayout(false);
       this->PerformLayout();
 
@@ -344,21 +433,25 @@ namespace Project {
     PointPairList^ f1_list = gcnew ZedGraph::PointPairList();
 
     // Интервал, где есть данные
-    //double xmin = Convert::ToDouble(textBox1->Text);
-   // double xmax = Convert::ToDouble(textBox2->Text);
-    double xmin = 0;
-    double xmax = 10;
+    double xmin = Convert::ToDouble(textBox6->Text);
+    double xmax = Convert::ToDouble(textBox7->Text);
+   // double xmin = 0;
+   // double xmax = 10;
     double h = Convert::ToDouble(textBox1->Text);
    // double h = 0.1;
     double eps = Convert::ToDouble(textBox4->Text);
     double coefL = Convert::ToDouble(textBox5->Text);
     double xmin_limit = xmin - 0.1;
     double xmax_limit = xmax + 0.1;
+    panel->Title->Text = "Метод Рунге-Кутта 4 порядка";
+    panel->XAxis->Title->Text = "х";
+    panel->YAxis->Title->Text = "u";
     /*
         double ymin_limit = -1.0;
         double ymax_limit = 100.0;
     */
     // Список точек
+
     int i = 0;
     double errorLoc;
     double  z0,u0, hControl; // z0 и u0 добавить 
@@ -406,6 +499,12 @@ namespace Project {
   private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
   }
 private: System::Void zedGraphControl1_Load(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void textBox5_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
