@@ -50,13 +50,13 @@ namespace Project {
   private: System::Windows::Forms::TextBox^ textBox2;
   private: System::Windows::Forms::TextBox^ textBox3;
   private: System::Windows::Forms::Label^ label3;
-  private: System::Windows::Forms::DataGridViewTextBoxColumn^ x;
-  private: System::Windows::Forms::DataGridViewTextBoxColumn^ u;
-  private: System::Windows::Forms::DataGridViewTextBoxColumn^ z;
-  private: System::Windows::Forms::DataGridViewTextBoxColumn^ local_error;
+
+
+
+
   private: System::Windows::Forms::TextBox^ textBox4;
   private: System::Windows::Forms::Label^ label4;
-  private: System::Windows::Forms::DataGridViewTextBoxColumn^ h;
+
   private: System::Windows::Forms::TextBox^ textBox5;
   private: System::Windows::Forms::Label^ label5;
   private: System::Windows::Forms::PictureBox^ pictureBox1;
@@ -66,6 +66,11 @@ namespace Project {
   private: System::Windows::Forms::TextBox^ textBox6;
   private: System::Windows::Forms::Label^ label7;
   private: System::Windows::Forms::TextBox^ textBox7;
+  private: System::Windows::Forms::DataGridViewTextBoxColumn^ x;
+  private: System::Windows::Forms::DataGridViewTextBoxColumn^ u;
+  private: System::Windows::Forms::DataGridViewTextBoxColumn^ z;
+  private: System::Windows::Forms::DataGridViewTextBoxColumn^ local_error;
+  private: System::Windows::Forms::DataGridViewTextBoxColumn^ h;
   protected:
 
   private: System::ComponentModel::IContainer^ components;
@@ -90,11 +95,6 @@ namespace Project {
       this->label1 = (gcnew System::Windows::Forms::Label());
       this->button1 = (gcnew System::Windows::Forms::Button());
       this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-      this->x = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-      this->u = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-      this->z = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-      this->local_error = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-      this->h = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
       this->label2 = (gcnew System::Windows::Forms::Label());
       this->textBox2 = (gcnew System::Windows::Forms::TextBox());
       this->textBox3 = (gcnew System::Windows::Forms::TextBox());
@@ -110,6 +110,11 @@ namespace Project {
       this->textBox6 = (gcnew System::Windows::Forms::TextBox());
       this->label7 = (gcnew System::Windows::Forms::Label());
       this->textBox7 = (gcnew System::Windows::Forms::TextBox());
+      this->x = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+      this->u = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+      this->z = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+      this->local_error = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+      this->h = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
       (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
       (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
       (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -170,31 +175,7 @@ namespace Project {
       this->dataGridView1->Name = L"dataGridView1";
       this->dataGridView1->Size = System::Drawing::Size(345, 442);
       this->dataGridView1->TabIndex = 4;
-      // 
-      // x
-      // 
-      this->x->HeaderText = L"x";
-      this->x->Name = L"x";
-      // 
-      // u
-      // 
-      this->u->HeaderText = L"u";
-      this->u->Name = L"u";
-      // 
-      // z
-      // 
-      this->z->HeaderText = L"z";
-      this->z->Name = L"z";
-      // 
-      // local_error
-      // 
-      this->local_error->HeaderText = L"local error";
-      this->local_error->Name = L"local_error";
-      // 
-      // h
-      // 
-      this->h->HeaderText = L"h";
-      this->h->Name = L"h";
+      this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView1_CellContentClick);
       // 
       // label2
       // 
@@ -321,6 +302,31 @@ namespace Project {
       this->textBox7->Size = System::Drawing::Size(66, 20);
       this->textBox7->TabIndex = 19;
       // 
+      // x
+      // 
+      this->x->HeaderText = L"x";
+      this->x->Name = L"x";
+      // 
+      // u
+      // 
+      this->u->HeaderText = L"u";
+      this->u->Name = L"u";
+      // 
+      // z
+      // 
+      this->z->HeaderText = L"u\'";
+      this->z->Name = L"z";
+      // 
+      // local_error
+      // 
+      this->local_error->HeaderText = L"ОЛП";
+      this->local_error->Name = L"local_error";
+      // 
+      // h
+      // 
+      this->h->HeaderText = L"h";
+      this->h->Name = L"h";
+      // 
       // MyForm
       // 
       this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -376,7 +382,7 @@ namespace Project {
       coeff[2][0] = f_1(u0 + coeff[1][1] * h / 2, L);//q2
       coeff[2][1] = z0 + coeff[1][0] * h / 2; // k2
       coeff[3][0] = f_1(u0 + coeff[2][1] * h, L);//q3
-      coeff[3][1] = z0 + coeff[2][1] * h;//k3
+      coeff[3][1] = z0 + coeff[2][0] * h;//k3
       res[0]= z0 + h / 6 * (coeff[0][0] + 2 * coeff[1][0] + 2 * coeff[2][0] + coeff[3][0]);
       res[1]= u0 + h / 6 * (coeff[0][1] + 2 * coeff[1][1] + 2 * coeff[2][1] + coeff[3][1]);
       return res;
@@ -399,15 +405,8 @@ namespace Project {
 
       S1 = abs(z_ - z);
       S2 = abs(u_ - u);
-      if (S1 >= S2)
-      {
-        S=S1;
-      }
-      else
-      {
-        S = S2;
-      }
-      S = S / 15;
+      
+      S = sqrt(S1*S1+S2*S2) / 15;
       locErr = S * 16 ;
       if (S > eps)
       {
@@ -443,7 +442,10 @@ namespace Project {
     double coefL = Convert::ToDouble(textBox5->Text);
     double xmin_limit = xmin - 0.1;
     double xmax_limit = xmax + 0.1;
-    panel->Title->Text = "Метод Рунге-Кутта 4 порядка";
+    panel->Title->Text = "....";
+  //  panel->Title->FontSpec->Fill->Brush = gcnew SolidBrush(Color);
+   // panel->Title->FontSpec->Fill->IsVisible = true;
+
     panel->XAxis->Title->Text = "х";
     panel->YAxis->Title->Text = "u";
     /*
@@ -452,19 +454,26 @@ namespace Project {
     */
     // Список точек
 
-    int i = 0;
+    int i = 1;
     double errorLoc;
     double  z0,u0, hControl; // z0 и u0 добавить 
     dataGridView1->Rows->Clear();
     u0 = Convert::ToDouble(textBox2->Text);
     z0 = Convert::ToDouble(textBox3->Text);
-    for (double x = xmin; x <= xmax; )
+    double x = xmin;
+    f1_list->Add(x, u0);
+    dataGridView1->Rows->Add();
+    dataGridView1->Rows[0]->Cells[0]->Value = x;
+    dataGridView1->Rows[0]->Cells[1]->Value = u0;
+    dataGridView1->Rows[0]->Cells[2]->Value = z0;
+    for (; x <= xmax; )
     {
       // Рунге-Кутта
       hControl = errorControl(u0, z0, h, eps, errorLoc, coefL);
      
       if (h <= hControl)
       {//Добавление на график
+        x = x + h;
         f1_list->Add(x, u0);
         //Печать в таблицу
         dataGridView1->Rows->Add();
@@ -473,7 +482,6 @@ namespace Project {
         dataGridView1->Rows[i]->Cells[2]->Value = z0;
         dataGridView1->Rows[i]->Cells[3]->Value = errorLoc;
         dataGridView1->Rows[i]->Cells[4]->Value = h;
-        x += h;
         i++;
       }
       h = hControl;
@@ -505,6 +513,8 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void textBox5_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 }
 };
 }
