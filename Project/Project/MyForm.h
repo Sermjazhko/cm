@@ -377,10 +377,10 @@ namespace Project {
       vector<double> res(2);
       coeff[0][0] = f_1(u0, L); // q0
       coeff[0][1] = z0; //k0
-      coeff[1][0] = f_1(u0+z0*h/2, L);//q1
-      coeff[1][1] = z0+coeff[0][0]*h/2;//k1
-      coeff[2][0] = f_1(u0 + coeff[1][1] * h / 2, L);//q2
-      coeff[2][1] = z0 + coeff[1][0] * h / 2; // k2
+      coeff[1][0] = f_1(u0+z0*h*0.5, L);//q1
+      coeff[1][1] = z0+coeff[0][0]*h*0.5;//k1
+      coeff[2][0] = f_1(u0 + coeff[1][1] * h *0.5, L);//q2
+      coeff[2][1] = z0 + coeff[1][0] * h *0.5; // k2
       coeff[3][0] = f_1(u0 + coeff[2][1] * h, L);//q3
       coeff[3][1] = z0 + coeff[2][0] * h;//k3
       res[0]= z0 + h / 6 * (coeff[0][0] + 2 * coeff[1][0] + 2 * coeff[2][0] + coeff[3][0]);
@@ -398,7 +398,7 @@ namespace Project {
       u_ = u0;
       for (int i = 0; i < 2; i++)
       {
-        rk2 = rungeKutta(u_, z_, h / 2, L);
+        rk2 = rungeKutta(u_, z_, h *0.5, L);
         z_ = rk2[0];
         u_ = rk2[1];
       }
@@ -410,7 +410,7 @@ namespace Project {
       locErr = S * 16 ;
       if (S > eps)
       {
-        return h / 2;
+        return h *0.5;
       } // принимаем точку 
       else
       {
@@ -442,7 +442,7 @@ namespace Project {
     double coefL = Convert::ToDouble(textBox5->Text);
     double xmin_limit = xmin - 0.1;
     double xmax_limit = xmax + 0.1;
-    panel->Title->Text = "....";
+    panel->Title->Text = ".RK.";
   //  panel->Title->FontSpec->Fill->Brush = gcnew SolidBrush(Color);
    // panel->Title->FontSpec->Fill->IsVisible = true;
 
@@ -466,7 +466,7 @@ namespace Project {
     dataGridView1->Rows[0]->Cells[0]->Value = x;
     dataGridView1->Rows[0]->Cells[1]->Value = u0;
     dataGridView1->Rows[0]->Cells[2]->Value = z0;
-    for (; x <= xmax; )
+    for (; x < xmax; )
     {
       // Рунге-Кутта
       hControl = errorControl(u0, z0, h, eps, errorLoc, coefL);
@@ -474,6 +474,7 @@ namespace Project {
       if (h <= hControl)
       {//Добавление на график
         x = x + h;
+		x = floor(x * 10000000000 + 0.5) / 10000000000;
         f1_list->Add(x, u0);
         //Печать в таблицу
         dataGridView1->Rows->Add();
